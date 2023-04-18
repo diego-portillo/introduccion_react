@@ -8,41 +8,45 @@ import { ToDoItem } from "./ToDoItem";
 import './App.css';
 
 const toDos = [
-  {text:'Cortar cebolla', completed: false},
+  {text:'Cortar cebolla', completed: true},
   {text:'Tomar curso de intro a React', completed: false},
   {text:'Llorar con la llorona', completed: false}
 ]
 
 function App(props) {
   return (
-  //   <React.Fragment>
-  //   <ToDoCounter />
-  //   <ToDoSearcher/>
-  //   <ToDoList>
-  //     {toDos.map(todo => (
-  //       <ToDoItem key={todo.text} text={todo.text}/>
-  //     ))}
-  //     </ToDoList>
-  //  <CreateToDoButton/>
+    <React.Fragment>
+    <ToDoCounter />
+    <ToDoSearcher/>
+    <ToDoList>
+      {toDos.map(todo => (
+        <ToDoItem 
+        key={todo.text} 
+        text={todo.text}
+        completed={todo.completed}
+        />
+      ))}
+      </ToDoList>
+   <CreateToDoButton/>
     
-  //   </React.Fragment>
-  <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {props.saludo}
-          {props.children}
-        </a>
-      </header>
-    </div>
+    </React.Fragment>
+  // <div className="App">
+  //     <header className="App-header">
+  //       <img src={logo} className="App-logo" alt="logo" />
+  //       <p>
+  //         Edit <code>src/App.js</code> and save to reload.
+  //       </p>
+  //       <a
+  //         className="App-link"
+  //         href="https://reactjs.org"
+  //         target="_blank"
+  //         rel="noopener noreferrer"
+  //       >
+  //         {props.saludo}
+  //         {props.children}
+  //       </a>
+  //     </header>
+  //   </div>
   );
 }
 
