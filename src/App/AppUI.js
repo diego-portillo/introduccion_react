@@ -8,13 +8,11 @@ import { ToDoList } from "../ToDoList";
 import { ToDoItem } from "../ToDoItem";
 
 function AppUI(){
-    
+    const {error, loading, searchedTodos, completeTodo, deleteTodo}= React.useContext(TodoContext)
     return (
         <React.Fragment>
     <ToDoCounter/>
-    <ToDoSearcher/>
-      <TodoContext.Consumer>
-        {({error, loading, searchedTodos, completeTodo, deleteTodo})=>(    
+    <ToDoSearcher/> 
           <ToDoList>
             {error && <p>Desesperate, hubo un error...</p>}
             {loading && <p>Estamos cargando, no desesperes...</p>}
@@ -28,8 +26,8 @@ function AppUI(){
               onDelete={()=> deleteTodo(todo.text)}
             />
             ))}
-        </ToDoList>)}
-      </TodoContext.Consumer>
+        </ToDoList>
+   
    <CreateToDoButton/>
     
     </React.Fragment>
