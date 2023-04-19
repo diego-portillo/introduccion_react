@@ -8,16 +8,30 @@ import './App.css';
 //   {text:'Llorar con la llorona', completed: false}
 // ]
 
-function App(props) {
-  const localStorageTodos = localStorage.getItem('TODOS_V1')
-  let parsedTodos
-  if(!localStorageTodos){
-    localStorage.setItem('TODOS_V1', JSON.stringify([]))
-    parsedTodos=[]
+function useLocalStorate(itemName, initialValue){
+  
+  const localStorageItem = localStorage.getItem(itemName)
+  let parsedItem
+  if(!localStorageItem){
+    localStorage.setItem(itemName, JSON.stringify(initialValue))
+    parsedItem=initialValue
   } else {
-    parsedTodos = JSON.parse(localStorageTodos)
+    parsedItem = JSON.parse(localStorageItem)
   }
-  const [todos, setTodos] = React.useState(parsedTodos)
+  
+  const [item, setItem] = React.useState(parsedItem)
+  
+  const saveItem = (newItem) => {
+    const stringifiedItem = JSON.stringify(newItem)
+    localStorage.setItem(itemName, stringifiedItem)
+    setItem(newItem)
+  }
+  return [item, saveItem]
+}
+
+function App(props) {
+  const [todos, saveTodos] = useLocalStorate('TODOS_V1',[])
+  const [patito, savePatitos] = useLocalStorate('PATITO_V1','a')
   const [searchValue, setSearchValue]  = React.useState('')
   const completedTodos = todos.filter(todo => !!todo.completed).length
   const totalTodos = todos.length
@@ -32,11 +46,6 @@ function App(props) {
     })
   }
 
-  const saveTodos = (newTodos) => {
-    const stringifiedTodos = JSON.stringify(newTodos)
-    localStorage.setItem('TODOS_V1', stringifiedTodos)
-    setTodos(newTodos)
-  }
 
   const completeTodo = (text)=>{
     const todoIndex = todos.findIndex(todo => todo.text === text)
@@ -52,7 +61,8 @@ function App(props) {
   }
 
 
-  return (
+  return [
+    <p>{patito}</p>,
     <AppUI
     totalTodos={totalTodos}
     completedTodos={completedTodos}
@@ -62,7 +72,7 @@ function App(props) {
     completeTodo={completeTodo}
     deleteTodo={deleteTodo}
     />
-  );
+  ];
 }
 
 export default App;
