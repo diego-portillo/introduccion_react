@@ -1,47 +1,35 @@
 import React from "react";
 // import logo from '../logo.svg';
+import { TodoContext } from "../TodoContext";
 import { ToDoCounter } from '../ToDoCounter'
 import { ToDoSearcher } from "../ToDoSearcher";
 import { CreateToDoButton } from "../CreateToDoButton";
 import { ToDoList } from "../ToDoList";
 import { ToDoItem } from "../ToDoItem";
 
-function AppUI({
-    loading,
-    error,
-    totalTodos,
-    completedTodos,
-    searchValue,
-    setSearchValue,
-    searchedTodos,
-    completeTodo,
-    deleteTodo
-}){
+function AppUI(){
     
     return (
         <React.Fragment>
-    <ToDoCounter 
-    total={totalTodos}
-    completed={completedTodos}
-    />
-    <ToDoSearcher
-    searchValue={searchValue}
-    setSearchValue={setSearchValue}
-    />
-    <ToDoList>
-        {error && <p>Desesperate, hubo un error...</p>}
-        {loading && <p>Estamos cargando, no desesperes...</p>}
-        {(!loading && !searchedTodos.length) && <p>Crea tu primer TODO!</p>}
-      {searchedTodos.map(todo => (
-        <ToDoItem 
-        key={todo.text} 
-        text={todo.text}
-        completed={todo.completed}
-        onComplete={()=> completeTodo(todo.text)}
-        onDelete={()=> deleteTodo(todo.text)}
-        />
-      ))}
-      </ToDoList>
+    <ToDoCounter/>
+    <ToDoSearcher/>
+      <TodoContext.Consumer>
+        {({error, loading, searchedTodos, completeTodo, deleteTodo})=>(    
+          <ToDoList>
+            {error && <p>Desesperate, hubo un error...</p>}
+            {loading && <p>Estamos cargando, no desesperes...</p>}
+            {(!loading && !searchedTodos.length) && <p>Crea tu primer TODO!</p>}
+            {searchedTodos.map(todo => (
+            <ToDoItem 
+              key={todo.text} 
+              text={todo.text}
+              completed={todo.completed}
+              onComplete={()=> completeTodo(todo.text)}
+              onDelete={()=> deleteTodo(todo.text)}
+            />
+            ))}
+        </ToDoList>)}
+      </TodoContext.Consumer>
    <CreateToDoButton/>
     
     </React.Fragment>
