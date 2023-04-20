@@ -22,7 +22,7 @@ function useLocalStorate(itemName, initialValue){
             setError(error)
         }
         
-          },1000)
+          },5000)
     })
     
     
